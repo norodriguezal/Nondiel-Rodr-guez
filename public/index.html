@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>La realidad virtual y realidad aumentada</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              'display': ['Orbitron', 'sans-serif'],
+              'body': ['Rajdhani', 'sans-serif'],
+            },
+            colors: {
+              'holo-cyan': '#00f3ff',
+              'holo-pink': '#ff00ff',
+              'deep-space': '#050510',
+            },
+            animation: {
+              'spin-slow': 'spin 10s linear infinite',
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body class="bg-black text-white overflow-hidden select-none touch-none">
+
+    <!-- HUD Overlay -->
+    <div id="hud" class="absolute inset-0 z-10 pointer-events-none flex flex-col justify-between p-6 md:p-10">
+        <!-- Header -->
+        <div class="flex justify-between items-start pointer-events-auto">
+            <div>
+                <h1 class="text-3xl md:text-5xl font-display font-bold tracking-tighter drop-shadow-[0_0_15px_rgba(0,243,255,0.5)]">
+                    LA REALIDAD <span class="text-holo-cyan">VIRTUAL</span>
+                    <br />
+                    Y REALIDAD <span class="text-[#00ff88]">AUMENTADA</span>
+                </h1>
+                <p class="text-white/80 font-mono text-sm tracking-[0.2em] mt-2 border-l-2 border-holo-pink pl-3">
+                    EXPLORACIÓN INMERSIVA v2.0
+                </p>
+            </div>
+            
+            <div class="flex gap-4">
+                <button class="p-3 bg-black/50 border border-white/20 text-white hover:border-holo-cyan hover:text-holo-cyan rounded-full transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Center Reticle -->
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-20">
+            <div class="w-[300px] h-[300px] border border-white/10 rounded-full flex items-center justify-center">
+                <div class="w-[280px] h-[280px] border border-dashed border-white/20 rounded-full animate-[spin_20s_linear_infinite]"></div>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="flex flex-col md:flex-row justify-between items-end gap-4 pointer-events-auto">
+            <div class="bg-black/60 backdrop-blur-md p-4 rounded border border-white/10 max-w-lg">
+                <div class="flex items-center gap-3 text-white/80 mb-2">
+                    <span class="text-xs font-display uppercase tracking-widest text-holo-cyan">Controles</span>
+                </div>
+                <p class="text-sm text-gray-300 font-mono leading-relaxed">
+                    🖱️ Arrastra para explorar el espacio | 👆 Haz clic en las esferas para ver información
+                </p>
+            </div>
+            <div class="flex gap-2 font-mono text-xs text-holo-cyan/50">
+                <div class="px-3 py-1 border border-holo-cyan/20 rounded-full">SYS: ONLINE</div>
+                <div class="px-3 py-1 border border-holo-cyan/20 rounded-full animate-pulse">NET: STABLE</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scene Container (360 Canvas) -->
+    <div id="scene-container" class="absolute inset-0 cursor-grab active:cursor-grabbing z-0 bg-black">
+        <!-- Stars and Nodes will be injected here by JS -->
+    </div>
+
+    <!-- Info Panel Overlay -->
+    <div id="info-panel" class="fixed inset-0 z-50 hidden">
+        <div id="panel-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
+        
+        <div id="panel-content" class="absolute top-1/2 left-1/2 w-[90%] max-w-[500px] bg-black/90 border-2 border-holo-cyan rounded-2xl p-6 text-white shadow-[0_0_50px_rgba(0,243,255,0.3)] transition-all duration-300 opacity-0 scale-90 translate-x-[-50%] translate-y-[-50%]">
+            <button id="panel-close" class="absolute top-4 right-4 text-holo-cyan hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+
+            <h2 id="panel-title" class="text-2xl font-display font-bold text-holo-cyan mb-4 drop-shadow-[0_0_10px_#00f3ff]"></h2>
+            
+            <p id="panel-desc" class="text-gray-300 italic mb-4 border-l-2 border-holo-pink pl-3"></p>
+            
+            <div id="panel-body" class="prose prose-invert prose-sm max-w-none font-body text-gray-200 leading-relaxed max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar"></div>
+
+            <div class="mt-6 p-4 bg-holo-cyan/10 rounded border border-holo-cyan/30">
+                <strong class="text-holo-cyan block mb-1 text-xs uppercase tracking-widest">Interactive Data</strong>
+                <div class="h-1 w-full bg-white/10 rounded-full overflow-hidden">
+                    <div class="h-full w-full bg-gradient-to-r from-holo-cyan to-holo-pink animate-pulse"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script type="module" src="/js/app.js"></script>
+</body>
+</html>
