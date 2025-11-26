@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cosmos AR Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              'display': ['Orbitron', 'sans-serif'],
+              'body': ['Rajdhani', 'sans-serif'],
+            },
+            colors: {
+              'holo-cyan': '#00f3ff',
+              'holo-pink': '#ff00ff',
+              'deep-space': '#050510',
+            },
+            boxShadow: {
+              'neon-blue': '0 0 10px #00f3ff, 0 0 20px #00f3ff',
+              'neon-pink': '0 0 10px #ff00ff, 0 0 20px #ff00ff',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body { margin: 0; overflow: hidden; background-color: #000; }
+      
+      @keyframes twinkle {
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.2); }
+      }
+
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+      }
+
+      /* Custom scrollbar for holographic panels */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(0, 243, 255, 0.1);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(0, 243, 255, 0.5);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 243, 255, 0.8);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+    "three": "https://aistudiocdn.com/three@^0.181.2",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24",
+    "@react-three/fiber": "https://aistudiocdn.com/@react-three/fiber@^9.4.0",
+    "@react-three/drei": "https://aistudiocdn.com/@react-three/drei@^10.7.7"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
